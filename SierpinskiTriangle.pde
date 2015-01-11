@@ -6,10 +6,13 @@ public void setup()
   frameRate(20);
 }
 
+boolean pause = false; int frames = 0; //Manual recording of frame number
 public void draw()
 {
+  if (pause) return;
+  frames++;
   background(255);
-  int len = 1000 + (int)(1000*sin(frameCount/35.0));
+  int len = 750 + (int)(500*sin(frames/15.0));
   fill(0);
   //noCursor();
   translate(mouseX, mouseY);
@@ -17,16 +20,19 @@ public void draw()
   translate(-mouseX, -mouseY);
   //translate(width/2, height/2);
   triangle(mouseX, mouseY - len*0.75, mouseX - len/2, mouseY + len*0.25, mouseX + len/2, mouseY + len*0.25);
-  sierpinski(mouseX, mouseY, len/2, iter);
+  sierpinski(mouseX, mouseY, len/2, iter + int(sin(frames/15.0)*3));
   //noLoop();
 }
 
 public void mousePressed()
 {
+  /*
   if (mouseButton == LEFT)
     iter++;
   else
     iter--;
+  */
+  pause = !pause;
 }
 
 public void sierpinski(float x, float y, float len, int iter) 
